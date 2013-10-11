@@ -15,27 +15,27 @@ var JSBigNumHexer = {
 			i++;
 		}
 		return z;
-	}
+	},
 
 	// Returns a*x, where x is an array of decimal digits and a is an ordinary
 	// JavaScript number. base is the number base of the array x.
 	multiplyByNumber: function(num,x,base) {
 		if (num < 0) return null;
-		if (num == 0) return [];
+		if (num === 0) return [];
 
 		var result = [];
 		var power = x;
 		while (true) {
 			if (num & 1) {
-				result = add(result, power, base);
+				result = this.add(result, power, base);
 			}
 			num = num >> 1;
 			if (num === 0) break;
-			power = add(power, power, base);
+			power = this.add(power, power, base);
 		}
 
 		return result;
-	}
+	},
 
 	parseToDigitsArray: function(str,base) {
 		var digits = str.split('');
@@ -46,10 +46,10 @@ var JSBigNumHexer = {
 			ary.push(n);
 		}
 		return ary;
-	}
+	},
 
 	convertBase: function(str,fromBase,toBase) {
-		var digits = parseToDigitsArray(str, fromBase);
+		var digits = this.parseToDigitsArray(str, fromBase);
 		if (digits === null) return null;
 
 		var outArray = [];
@@ -57,13 +57,13 @@ var JSBigNumHexer = {
 		for (var i = 0; i < digits.length; i++) {
 			// invariant: at this point, fromBase^i = power
 			if (digits[i]) {
-				outArray = add(outArray, multiplyByNumber(digits[i], power, toBase), toBase);
+				outArray = this.add(outArray, this.multiplyByNumber(digits[i], power, toBase), toBase);
 			}
-			power = multiplyByNumber(fromBase, power, toBase);
+			power = this.multiplyByNumber(fromBase, power, toBase);
 		}
 
 		var out = '';
-		for (var i = outArray.length - 1; i >= 0; i--) {
+		for (i = outArray.length - 1; i >= 0; i--) {
 			out += outArray[i].toString(toBase);
 		}
 		return out.toLowerCase();
