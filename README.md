@@ -12,3 +12,5 @@ Well you're in luck. Search no more.
 [The actual code is not by me. Go here for the original. I just modernized it.](http://danvk.org/hex2dec.html).
 
 Public domain as far as I know.
+
+If you really want serious JavaScript bignum action, try [other libraries like this.](https://github.com/jtobey/javascript-bignum)
